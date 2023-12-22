@@ -1,0 +1,9 @@
+[submodule "me/themes/hello-friend-ng"]
+	path = me/themes/hello-friend-ng
+	url = https://github.com/rhazdon/hugo-theme-hello-friend-ng.git
+[submodule "me/themes/hugo-coder"]
+	path = me/themes/hugo-coder
+	url = https://github.com/luizdepra/hugo-coder.git
+[submodule "ob/themes/hello-friend-ng"]
+	path = ob/themes/hello-friend-ng
+	url = https://github.com/rhazdon/hugo-theme-hello-friend-ng.git
