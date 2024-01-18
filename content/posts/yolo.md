@@ -48,8 +48,9 @@ So my first idea was: “*ok, then I will encrypt them before writing the DLL in
 The first point wasn’t actually a big issue, since implementing another function and exporting it is not a big deal. For what instead concerned the other point, at first glance I had no many solutions in mind to retrieve the exact range of addresses that would contain my reflective function but just a blurry idea similar to this ugly [draw.io](http://draw.io) 
 
  
-
-![Untitled](/yolo/Untitled%201.png)
+{{< rawhtml >}}
+  <img src=/yolo/Untitled%201.png class="center">
+{{< /rawhtml >}}
 
 ## First Challenges
 
@@ -77,7 +78,9 @@ I must admit I haven’t tried this because I got distracted by many other thing
 
 Between masterchef and the latest idea I had, I also started to work on other IT related stuff, and while I was randomly looking at the procedure of [stack unwinding](https://stackoverflow.com/questions/2331316/what-is-stack-unwinding) I have realized that within the PE file there is a directory that contains exactly **what I was looking for** 😮:
 
-![Untitled](/yolo/Untitled%202.png)
+{{< rawhtml >}}
+  <img src=/yolo/Untitled%202.png class="center">
+{{< /rawhtml >}}
 
 Basically within the PE (in the the IMAGE_DIRECTORY_ENTRY_EXCEPTION) are saved **the RVAs of the begin and the end of each functions**. And if you wonder why, the reason is that with that information, it’s easy for the OS to determine in what function an exception has been encountered and what stack frame has to be *unwinded* 👀 
 
@@ -310,7 +313,7 @@ EXTERN_DLL_EXPORT bool SupportLoader() {
         reflectiveAddr[i] = reflectiveAddr[i] ^ KEY[j];
     }
     //execute the loading tasks
-    **pebase = ReflectiveFunction(pDllHeader->funcSize);**
+    pebase = ReflectiveFunction(pDllHeader->funcSize);
     //re-encrypting the reflective function 
     for (size_t i = 0, j = 0; i < (pDllHeader->funcSize); i++, j++) {
         if (j >= sizeof(pDllHeader->key)) {
