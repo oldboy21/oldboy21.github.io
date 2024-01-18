@@ -1,14 +1,12 @@
 ---
-title: "Yolo"
+title: "YOLO: You Only Load Once"
 date: 2024-01-18T16:04:14+01:00
-draft: true
+draft: false
 toc: false
 images:
 tags:
-  - untagged
+  - security
 ---
-
-# YOLO: You Only Load Once
 
 Ciao! back again for couple of extra thoughts about Reflective DLL Injection. If you did not read the first [post](https://oldboy21.github.io/posts/2023/12/all-i-want-for-christmas-is-reflective-dll-injection/), I might suggest you to give it a try before diving in here. What we talked about last time anyway was: 
 
@@ -24,7 +22,7 @@ In this specific case what is presented is pretty far from a final solution to a
 
 While playing around with the Reflective DLL technique, mostly concerning how my very basic implementation behaved in terms of defence bypass and all, I have noticed that among the indicators of malicious activities there were the following: 
 
-![Untitled](YOLO%20You%20Only%20Load%20Once%2058018cbfd78744d68f2684ccae443b77/Untitled.png)
+![Untitled](/yolo/Untitled.png)
 
 Despite that is the result of a static analysis, that would leave indicators of compromise also in-memory, if it gets analysed. 
 
@@ -34,7 +32,7 @@ However, as I explained in the previous blog, those parsing/linking/loading oper
 
 However, one random rainy night: 
 
-![Untitled](YOLO%20You%20Only%20Load%20Once%2058018cbfd78744d68f2684ccae443b77/Untitled.jpeg)
+![Untitled](/yolo/Untitled.jpeg)
 
 The custom *GetProcAddress* and *GetModuleHandle* functions implemented for the Reflective DLL to be loaded are actually needed only **once** to carry out the **loading tasks**, after those tasks are achieved successfully, the DLL can live and operate happily without (unless of course you want to keep using them for reasons I am not going to address here). 
 
@@ -49,7 +47,7 @@ The first point wasn’t actually a big issue, since implementing another functi
 
  
 
-![Untitled](YOLO%20You%20Only%20Load%20Once%2058018cbfd78744d68f2684ccae443b77/Untitled%201.png)
+![Untitled](/yolo/Untitled%201.png)
 
 ## First Challenges
 
@@ -71,13 +69,13 @@ Something like this:
 
 I must admit I haven’t tried this because I got distracted by many other things, but I think it would have worked. 
 
-![Untitled](YOLO%20You%20Only%20Load%20Once%2058018cbfd78744d68f2684ccae443b77/Untitled%201.jpeg)
+![Untitled](/yolo/Untitled%201.jpeg)
 
 ## The Solution (on paper)
 
 Between masterchef and the latest idea I had, I also started to work on other IT related stuff, and while I was randomly looking at the procedure of [stack unwinding](https://stackoverflow.com/questions/2331316/what-is-stack-unwinding) I have realized that within the PE file there is a directory that contains exactly **what I was looking for** 😮:
 
-![Untitled](YOLO%20You%20Only%20Load%20Once%2058018cbfd78744d68f2684ccae443b77/Untitled%202.png)
+![Untitled](/yolo/Untitled%202.png)
 
 Basically within the PE (in the the IMAGE_DIRECTORY_ENTRY_EXCEPTION) are saved **the RVAs of the begin and the end of each functions**. And if you wonder why, the reason is that with that information, it’s easy for the OS to determine in what function an exception has been encountered and what stack frame has to be *unwinded* 👀 
 
@@ -360,15 +358,15 @@ void* custom_memcpy(void* pDestination, void* pSource, size_t sLength, PBYTE toZ
 
 Ok but what about the MessageBox popping up?
 
-![Classic Messagebox invoking the SupportLoader instead](YOLO%20You%20Only%20Load%20Once%2058018cbfd78744d68f2684ccae443b77/Untitled%203.png)
+![Classic Messagebox invoking the SupportLoader instead](/yolo/Untitled%203.png)
 
 Classic Messagebox invoking the SupportLoader instead
 
-![ReflectiveLoader zero-ed out in the loaded image](YOLO%20You%20Only%20Load%20Once%2058018cbfd78744d68f2684ccae443b77/Untitled%204.png)
+![ReflectiveLoader zero-ed out in the loaded image](/yolo/Untitled%204.png)
 
 ReflectiveLoader zero-ed out in the loaded image
 
-![Zero-ed out encryption key](YOLO%20You%20Only%20Load%20Once%2058018cbfd78744d68f2684ccae443b77/Untitled%205.png)
+![Zero-ed out encryption key](/yolo/Untitled%205.png)
 
 Zero-ed out encryption key
 
