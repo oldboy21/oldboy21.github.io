@@ -22,7 +22,9 @@ In this specific case what is presented is pretty far from a final solution to a
 
 While playing around with the Reflective DLL technique, mostly concerning how my very basic implementation behaved in terms of defence bypass and all, I have noticed that among the indicators of malicious activities there were the following: 
 
-![Untitled](/yolo/Untitled.png)
+{{< rawhtml >}}
+  <img src=/yolo/Untitled.png class="center">
+{{< /rawhtml >}}
 
 Despite that is the result of a static analysis, that would leave indicators of compromise also in-memory, if it gets analysed. 
 
