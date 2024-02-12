@@ -520,13 +520,13 @@ EXTERN_C NTSTATUS ZwAllocateVirtualMemory(
     IN PBYTE syscallret);
 ```
 
-in the specific case of the ZwAllocateVirtualMemory. I would have found the SSN in **dword ptr [rsp + 56]** and the syscallret address in **qword ptr [rsp + 64].** 
+In the specific case of the ZwAllocateVirtualMemory. I would have found the SSN in **dword ptr [rsp + 56]** and the syscallret address in **qword ptr [rsp + 64].** 
 
 And luckily I was right 😀
 
-I had defined the function within my ASM file as following: 
+Hence I had defined the function within my ASM file as following: 
 
-```cpp
+```nasm
 .code 
 ZwAllocateVirtualMemory PROC
   mov r10, rcx
