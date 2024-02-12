@@ -17,14 +17,13 @@ Ciao World, since I can’t get enough of playing around with the Reflective DLL
 {{< /rawhtml >}}
 
 So what I will be addressing here is: 
-
 - Indirect syscall: why and (mostly) references
 - SSN enum and PIC challenges
 - 1 tb of MASM
 
 ## Disclaimer
 
-I write code and implement techniques for research and learning purposes only. Not trying to claim anything, just humbly sharing knowledge, experiences and code. If I have wrote something you already had in your hidden arsenal years ago, feel free to take all the credits. And sorry for my C++ code, it’s plenty of mistakes 😀
+I write code and implement techniques for research and learning purposes only. Not trying to claim anything, just humbly sharing knowledge, experiences and code 😀 feel always free to reach out for any doubts or question. 
 
 # Indirect Syscalls
 
@@ -97,7 +96,10 @@ I liked them all ❤️  however I have found inspiration only looking at the la
 
 In the end what I have decided to implement was a Position Indipendent Code that would retrieve the address of all the **Zw** function within the DLL and sort them by address, finally retrieving the needed amount of pseudo-random address pointing to syscall/ret instructions to still try to fake the function the reflective DLL is invoking. 
 
-![https://media1.giphy.com/media/1ziiQ8TVfLgeGWUOFx/giphy.gif?cid=7941fdc6y1pf1309dgcpgkkrjqwgvmqstfjenwu1qphvue9p&ep=v1_gifs_search&rid=giphy.gif&ct=g](https://media1.giphy.com/media/1ziiQ8TVfLgeGWUOFx/giphy.gif?cid=7941fdc6y1pf1309dgcpgkkrjqwgvmqstfjenwu1qphvue9p&ep=v1_gifs_search&rid=giphy.gif&ct=g)
+{{< rawhtml >}}
+<img src=https://media1.giphy.com/media/1ziiQ8TVfLgeGWUOFx/giphy.gif?cid=7941fdc6y1pf1309dgcpgkkrjqwgvmqstfjenwu1qphvue9p&ep=v1_gifs_search&rid=giphy.gif&ct=g class="center" alt="animated">
+{{< /rawhtml >}}
+
 
 A position dependent version of the code I want to implement can be found in my repo [here](https://github.com/oldboy21/SyscallMeMaybe/blob/3f5c9704cf88f209c8b9e27d9c3ab02aa472707b/SyscallMeMaybe/SyscallMeMaybe.cpp#L133) 🙂
 
@@ -209,29 +211,39 @@ syscallHalf[zwCounter] = (DWORD) (addressValue & 0xFFFFFFFF); //saving the funct
 
 These lines above are about the unexpected challenge I mentioned before, because as we all know on 64-bit systems a DWORD is not big enough to hold a memory address. So why would I instead just cut the address in half and save it in a DWORD array?   
 
-![Untitled](/dllsyscalls/Untitled.png)
+{{< rawhtml >}}
+<img src=/dllsyscalls/Untitled.png class="center">
+{{< /rawhtml >}}
 
 At first I thought I had messed up some imports or external references and started to blame my laziness and lack of order in the things I do, but apparently I was wrong 😌 
 
 and those three errors are related to **filling up the stack space**
 
-![https://media4.giphy.com/media/JwVWLRnZkh2M0/giphy.gif?cid=7941fdc66eeci78xnqv7kns5vsytppxx4q6bd4qz436f5bv9&ep=v1_gifs_search&rid=giphy.gif&ct=g](https://media4.giphy.com/media/JwVWLRnZkh2M0/giphy.gif?cid=7941fdc66eeci78xnqv7kns5vsytppxx4q6bd4qz436f5bv9&ep=v1_gifs_search&rid=giphy.gif&ct=g)
+{{< rawhtml >}}
+<img src=https://media4.giphy.com/media/JwVWLRnZkh2M0/giphy.gif?cid=7941fdc66eeci78xnqv7kns5vsytppxx4q6bd4qz436f5bv9&ep=v1_gifs_search&rid=giphy.gif&ct=g class="center" alt="animated">
+{{< /rawhtml >}}
 
 After looking little around I have found that: 
 
-![Untitled](/dllsyscalls/Untitled%201.png)
+{{< rawhtml >}}
+<img src=/dllsyscalls/Untitled%201.png class="center">
+{{< /rawhtml >}}
 
 And that made **a lot of sense** all of a sudden, being position independent code it has to rely on stack variables and since my idea was to grab all the **Zw** functions and sort them to figure the SSNs, I was making use of way too much memory on the stack. Annoying, but despite the other techniques for SSN retrieval (Hell’s Gate, …) would have solved this problem, I decided to give it an extra thought. 
 
 At first I had tried just to change the linker options so that I could increase the reserved space for the stack manipulating the **[/STACK** linker option](https://learn.microsoft.com/en-us/cpp/build/reference/stack-stack-allocations?view=msvc-170) to realize pretty quickly that of course
 
-![Untitled](/dllsyscalls/Untitled%202.png)
+{{< rawhtml >}}
+<img src=/dllsyscalls/Untitled%202.png class="center">
+{{< /rawhtml >}}
 
 But then I thought: why do I need the full address when I can just sort basing on the 4 least significant bytes of the memory address?  🙀 
 
 Being inside the limited space of the virtual space of a single process and being just the memory space allocated for a single module in memory, what I am thinking should work: 
 
-![Untitled](/dllsyscalls/Untitled%203.png)
+{{< rawhtml >}}
+<img src=/dllsyscalls/Untitled%203.png class="center">
+{{< /rawhtml >}}
 
 As soon as I have put the SYSCALL_ENTRY struct a side for a moment and started working with only the DWORD array, the error was gone (could’ve just done the math but it was fun moment) 🌈
 
@@ -478,7 +490,9 @@ In this case the approach could not be recycled since the DLL needs to be loaded
 
 What I thought is that the procedures within the ASM file are invoked just like a normal function from the C code. As any other functions that takes arguments, it expect the latter  to be placed into registers or stack as per the [windows calling convention](https://learn.microsoft.com/en-us/cpp/build/x64-calling-convention?view=msvc-170)
 
-![Untitled](/dllsyscalls/Untitled%204.png)
+{{< rawhtml >}}
+<img src=/dllsyscalls/Untitled%204.png class="center">
+{{< /rawhtml >}}
 
 Without diving too much into the calling convention we can expect parameter to be passed like this to the target functions: 
 
@@ -537,7 +551,9 @@ end
 
 ## Che bello:
 
-![Untitled](/dllsyscalls/Untitled%205.png)
+{{< rawhtml >}}
+<img src=/dllsyscalls/Untitled%205.png class="center">
+{{< /rawhtml >}}
 
 ## Conclusions and Credits
 
