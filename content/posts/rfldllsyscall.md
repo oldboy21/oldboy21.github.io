@@ -12,7 +12,9 @@ tags:
 
 Ciao World, since I can’t get enough of playing around with the Reflective DLL that inspired the very first blog during the Christmas Holiday, after the [YOLO Loader](https://oldboy21.github.io/posts/2024/01/yolo-you-only-load-once/) I decided to grant the little nasty DLL a new super-power: **Indirect syscalls**
 
-![https://media1.giphy.com/media/7JO6BhBHo67WKYXfAO/giphy.gif?cid=7941fdc6xcjd63nkqoczj2yl0oantzlwia2pr7ea2ml4kqdz&ep=v1_gifs_search&rid=giphy.gif&ct=g](https://media1.giphy.com/media/7JO6BhBHo67WKYXfAO/giphy.gif?cid=7941fdc6xcjd63nkqoczj2yl0oantzlwia2pr7ea2ml4kqdz&ep=v1_gifs_search&rid=giphy.gif&ct=g)
+{{< rawhtml >}}
+<img src=https://media1.giphy.com/media/7JO6BhBHo67WKYXfAO/giphy.gif?cid=7941fdc6xcjd63nkqoczj2yl0oantzlwia2pr7ea2ml4kqdz&ep=v1_gifs_search&rid=giphy.gif&ct=g class="center" alt="animated">
+{{< /rawhtml >}}
 
 So what I will be addressing here is: 
 
@@ -38,7 +40,9 @@ While the execution flow of our process is transitioning between **[user-mode** 
 
 Someone once said I am good with metaphor or examples so: 
 
-![Untitled](/dllsyscalls/Untitled%201.jpeg)
+{{< rawhtml >}}
+<img src=/dllsyscalls/Untitled%201.jpeg class="center">
+{{< /rawhtml >}}
 
 *Imagine you are a really suspicious API (e.g. VirtualAlloc) that is about to take a flight to somewhere warm (which is the beautiful kernel-mode). So you walk into the airport and before stepping into the aircraft (which in this example is the syscall) you meet the EDR wearing clothes of Airport security. What the EDR wants to do before letting you jump on the aircraft is to check your luggage. As Win32 API you act bit surprised and say: I just have a LPVOID, couple of DWORD and a SIZE_T, check_in desk said it was allowed. Still the EDR opens your bags and decides whether you planning to do something nasty:* **User-land hooks.**
 
