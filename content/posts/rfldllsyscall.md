@@ -35,7 +35,7 @@ Not only my Reflective DLL gets new skills, also EDRs do. One of the few things 
 
 Some of the Win32 APIs needs to politely step into kernel-mode in order to achieve what they want. Among these we have **VirtualAlloc, ReadFile, WriteFile, etc.** The gate to the kernel world is the syscall instruction (within ntdll.dll). 
 
-While the execution flow of our process is transitioning between **[user-mode** and **kernel-mode](https://learn.microsoft.com/nl-nl/windows-hardware/drivers/gettingstarted/user-mode-and-kernel-mode)** the EDR is able to put itself in between and check what are the intentions of the APIs before letting the execution move forward. 
+While the execution flow of our process is transitioning between [**user-mode** and **kernel-mode**](https://learn.microsoft.com/nl-nl/windows-hardware/drivers/gettingstarted/user-mode-and-kernel-mode)** the EDR is able to put itself in between and check what are the intentions of the APIs before letting the execution move forward. 
 
 Someone once said I am good with metaphor or examples so: 
 
@@ -69,7 +69,7 @@ And many more. Most of them do refer to really interesting others so this list i
 
 Now that we have an idea of what this “indirect syscall” super power is, why would it be nice to grant it to my Reflective DLL? 
 
-Well as I mentioned [here](https://oldboy21.github.io/posts/2023/12/all-i-want-for-christmas-is-reflective-dll-injection/)  in order to work properly the Reflective DLL has to perform all the loading tasks ****to load itself into the memory of the target process. These loading tasks also entail the use of VirtualAlloc and VirtualProtect Win32 APIs which are among those that gets hooked and inspected by the EDRs. Therefore indirect syscall capabilities would definitely help the Reflective DLL to be more stealth during and after the loading process 😊
+Well as I mentioned [here](https://oldboy21.github.io/posts/2023/12/all-i-want-for-christmas-is-reflective-dll-injection/)  in order to work properly the Reflective DLL has to perform all the loading tasks to load itself into the memory of the target process. These loading tasks also entail the use of VirtualAlloc and VirtualProtect Win32 APIs which are among those that gets hooked and inspected by the EDRs. Therefore indirect syscall capabilities would definitely help the Reflective DLL to be more stealth during and after the loading process 😊
 
 ### Retrieving SSNs
 
