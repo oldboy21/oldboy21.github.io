@@ -94,7 +94,7 @@ Different techniques have been explored for the runtime SSN enumeration task:
 
 I liked them all ❤️  however I have found inspiration only looking at the latest syswhisper3 techniques and FreshyCalls. An interesting read that definitely motived my approach was the article by Klezvirus: [https://klezvirus.github.io/RedTeaming/AV_Evasion/NoSysWhisper/](https://klezvirus.github.io/RedTeaming/AV_Evasion/NoSysWhisper/)
 
-In the end what I have decided to implement was a Position Indipendent Code that would retrieve the address of all the **Zw** function within the DLL and sort them by address, finally retrieving the needed amount of pseudo-random address pointing to syscall/ret instructions to still try to fake the function the reflective DLL is invoking. 
+In the end what I have decided to implement was a Position Indipendent Code that would retrieve the address of all the **Zw** functions within the DLL and sort them by address, finally retrieve the needed amount of pseudo-random addresses pointing to syscall/ret instructions to fake the function the reflective DLL is invoking at execution time (e.g. invoking VirtualAlloc via syscall/ret instruction found in the implementation of ZwAccessCheck). 
 
 {{< rawhtml >}}
 <img src=https://media1.giphy.com/media/1ziiQ8TVfLgeGWUOFx/giphy.gif?cid=7941fdc6y1pf1309dgcpgkkrjqwgvmqstfjenwu1qphvue9p&ep=v1_gifs_search&rid=giphy.gif&ct=g class="center" alt="animated">
