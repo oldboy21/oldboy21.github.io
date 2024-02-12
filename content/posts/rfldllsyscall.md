@@ -35,7 +35,7 @@ Not only my Reflective DLL gets new skills, also EDRs do. One of the few things 
 
 Some of the Win32 APIs needs to politely step into kernel-mode in order to achieve what they want. Among these we have **VirtualAlloc, ReadFile, WriteFile, etc.** The gate to the kernel world is the syscall instruction (within ntdll.dll). 
 
-While the execution flow of our process is transitioning between [**user-mode** and **kernel-mode**](https://learn.microsoft.com/nl-nl/windows-hardware/drivers/gettingstarted/user-mode-and-kernel-mode)** the EDR is able to put itself in between and check what are the intentions of the APIs before letting the execution move forward. 
+While the execution flow of our process is transitioning between [user-mode and kernel-mode](https://learn.microsoft.com/nl-nl/windows-hardware/drivers/gettingstarted/user-mode-and-kernel-mode) the EDR is able to put itself in between and check what are the intentions of the APIs before letting the execution move forward. 
 
 Someone once said I am good with metaphor or examples so: 
 
@@ -231,7 +231,7 @@ After looking little around I have found that:
 
 And that made **a lot of sense** all of a sudden, being position independent code it has to rely on stack variables and since my idea was to grab all the **Zw** functions and sort them to figure the SSNs, I was making use of way too much memory on the stack. Annoying, but despite the other techniques for SSN retrieval (Hell’s Gate, …) would have solved this problem, I decided to give it an extra thought. 
 
-At first I had tried just to change the linker options so that I could increase the reserved space for the stack manipulating the **[/STACK** linker option](https://learn.microsoft.com/en-us/cpp/build/reference/stack-stack-allocations?view=msvc-170) to realize pretty quickly that of course
+At first I had tried just to change the linker options so that I could increase the reserved space for the stack manipulating the [/STACK linker option](https://learn.microsoft.com/en-us/cpp/build/reference/stack-stack-allocations?view=msvc-170) to realize pretty quickly that of course
 
 {{< rawhtml >}}
 <img src=/dllsyscalls/Untitled%202.png class="center">
