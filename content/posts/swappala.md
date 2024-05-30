@@ -31,7 +31,7 @@ Want to more details about this? Yes? Then [this](https://kyleavery.com/posts/av
 
 ## What I Want To Achieve?
 
-How it went? This whole idea started while I was looking at module stomping to be honest. Loading a sacrificial DLL to allocate memory for my reflective DLL. While I was doing that I was also going through some video of [Sektor7](https://institute.sektor7.net/) where they map/unmap a private unbacked section to hide the shellcode. Not happy with my level of workload I started to take a look at Ekko and how I could play with it, as well as the various in memory obfuscation techniques that change protections of allocated memory and encrypt content. (*And prepping the Murph crossfit workout 44min bam bam bam*)
+How it went? This whole idea started while I was looking at module stomping to be honest. Loading a sacrificial DLL to allocate memory for my reflective DLL. While I was doing that I was also going through some video of [Sektor7](https://institute.sektor7.net/) where they map/unmap a private unbacked section to hide the shellcode (SWAPPALA was inspired by that module in the Sektor7 course that I heavily suggest to buy). Not happy with my level of workload I started to take a look at Ekko and how I could play with it, as well as the various in memory obfuscation techniques that change protections of allocated memory and encrypt content. (*And prepping the Murph crossfit workout 44min bam bam bam*)
 
 {{< rawhtml >}}
 <img src=https://media0.giphy.com/media/BBkKEBJkmFbTG/giphy.gif?cid=7941fdc665l816guhure2cjhs071fxjug3j0ojpocs38031g&ep=v1_gifs_search&rid=giphy.gif&ct=g class="center" alt="animated">
