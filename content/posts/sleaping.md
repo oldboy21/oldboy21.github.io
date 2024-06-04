@@ -40,7 +40,7 @@ Unfortunately copy pasta SWAPPALA into Reflective DLL code did not work right aw
 
 {{< rawhtml >}}
 <img src=https://media0.giphy.com/media/14ceV8wMLIGO6Q/giphy.gif?cid=7941fdc6g8l53q9d6vojfo9v7edj9ldzp5p4qmmxjv2evzaa&ep=v1_gifs_search&rid=giphy.gif&ct=g class="center" alt="animated">
-{{< rawhtml >}}
+{{< /rawhtml >}}
 
 That was happening because some of the ROP chain functions were not executing properly so the main thread was coming back from sleep into an unexisting section in memory, very scary.
 
@@ -59,13 +59,13 @@ Jokes aside, it took me some debugging to understand that those functions were n
 
 {{< rawhtml >}}
 <img src=https://media2.giphy.com/media/LRgZHbEpQvHEi8PID6/giphy.gif?cid=7941fdc6kwlubnnwo10ep7hdy58ufidrl75zjuljn1q517to&ep=v1_gifs_search&rid=giphy.gif&ct=g class="center" alt="animated">
-{{< rawhtml >}}
+{{< /rawhtml >}}
 
 Breakpoints on “MapViewOffileEx” were never hit while all the other functions were executed properly. So something was happening before even getting to the point of execution of those functions. It did not take a genius that was something that had to do with my EkkoQua implementation. Duplicating the stack in order to be able to work with functions that takes more than 4 arguments was definitely the trigger for this annoying behaviour. Ok so then I did my homework with x64dbg and set a breakpoint on the “NtContinue” instead and:
 
 {{< rawhtml >}}
 <img src=/sleaping/Untitled.png class="center">
-{{< rawhtml >}}
+{{< /rawhtml >}}
 
 Ehehe, must admit I am not great at reverse engineering but the only thing I noticed was that after the NtContinue, after not so many instructions, the thread was being killed without causing too much noises. Alright, not many conclusions out of that. 
 
@@ -75,7 +75,7 @@ Really haven’t thought of something like that, however it was interesting to r
 
 {{< rawhtml >}}
 <img src=/sleaping/Untitled%201.png class="center">
-{{< rawhtml >}}
+{{< /rawhtml >}}
 
 A bello script that would tell me all the running processes that had no security protections enabled. Injecting Reflective DLL + SWAPPALA in those process was working just fine. 
 
@@ -85,13 +85,13 @@ I honestly tried to figure what exactly was the problem but it was kinda challen
 
 {{< rawhtml >}}
 <img src=/sleaping/Untitled.jpeg class="center">
-{{< rawhtml >}}
+{{< /rawhtml >}}
 
 It felt like it wasn’t the right way to approach this anyway and I started switching my mind on different ideas, among which setting HWBP on the worker threads registries in order to set the arguments of the MapViewOfFileEx by hooking the functions and working my way around that in the vectored exception handler. Bad idea once i discovered that NtContinue ignores debug registers 
 
 {{< rawhtml >}}
 <img src=https://media1.giphy.com/media/1FMaabePDEfgk/giphy.gif?cid=7941fdc6uk3xaomchtzi738auplxy1bkl5r2bnsaon951a61&ep=v1_gifs_search&rid=giphy.gif&ct=g class="center" alt="animated">
-{{< rawhtml >}}
+{{< /rawhtml >}}
 
 Ok so, let’s take a breath and start over. 
 
@@ -164,9 +164,9 @@ Context Matters, even for sle(a)ping:
     [...]
     
     GetThreadContext(ThreadArray[0], context);//unmap
-  GetThreadContext(ThreadArray[1], contextB);//mapex
-  GetThreadContext(ThreadArray[2], contextC);//unmap
-  GetThreadContext(ThreadArray[3], contextD);//mapex
+    GetThreadContext(ThreadArray[1], contextB);//mapex
+    GetThreadContext(ThreadArray[2], contextC);//unmap
+    GetThreadContext(ThreadArray[3], contextD);//mapex
     
     //exit gracefully 
     *(ULONG_PTR*)((*context).Rsp) = (DWORD64)ExitThread;
@@ -313,7 +313,7 @@ Ah almost forgot, bonus point: “ResumeThread” does not need to be whiteliste
 
 {{< rawhtml >}}
 <img src=/sleaping/Untitled%202.png) class="center">
-{{< rawhtml >}}
+{{< /rawhtml >}}
 
 Che bello it was tough to take this screenshot. We all know how SWAPPALA reacts to memory scanners so we keep it like this for today. 
 
