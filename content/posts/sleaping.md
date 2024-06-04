@@ -312,7 +312,7 @@ Ah almost forgot, bonus point: “ResumeThread” does not need to be whiteliste
 ## Demo Time
 
 {{< rawhtml >}}
-<img src=/sleaping/Untitled%202.png) class="center">
+<img src=/sleaping/Untitled%202.png class="center">
 {{< /rawhtml >}}
 
 Che bello it was tough to take this screenshot. We all know how SWAPPALA reacts to memory scanners so we keep it like this for today. 
