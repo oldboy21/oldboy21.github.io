@@ -8,7 +8,7 @@ tags:
   - untagged
 ---
 
-Here we go again, hello everyone! Sorry I am on a roll this period, can’t really sle(a)p well when I have something sill to solve and I had some leftovers from the previous [SWAPPALA](https://oldboy21.github.io/posts/2024/05/swappala-why-change-when-you-can-hide/) adventure. 
+Here we go again, hello everyone! Sorry I am on a roll this period, can’t really sle(a)p well when I have something still to solve and I had some leftovers from the previous [SWAPPALA](https://oldboy21.github.io/posts/2024/05/swappala-why-change-when-you-can-hide/) adventure. 
 
 What we going to talk about today? 
 
