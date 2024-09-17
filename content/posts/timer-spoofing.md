@@ -15,11 +15,9 @@ Last time in my blog I have talked how to hide a memory mapping (where in my cas
 All of that was working pretty well, still it was leaving some IOC behind: The great [Hunt Sleeping Beacons](https://github.com/thefLink/Hunt-Sleeping-Beacons) tool by [thefLink](https://twitter.com/thefLinkk) was in fact noticing a thing or two 👀
 
 ## Disclaimer
-
 In this blog post I will touch arguments like Worker threads, Timers and Asynchronous Procedures Calls. I will not dive into what those are and specifically how they work, but only how I used them in order to achieve my goals. Said that, if you are not familiar with those concept I would suggest to take a look at that first 🙏🏼
 
 ## The Detection
-
 {{< rawhtml >}}
 <img src=/timerspoof/image.png class="center">
 {{< /rawhtml >}}
@@ -41,7 +39,6 @@ But that would become a cat&mouse game wouldn’t it?
 {{< /rawhtml >}}
 
 ## The Idea
-
 At that point I thought, ok we do a lot of things at sleeping time, why not trying to implement something that hides those callbacks as well? Sneak peeking at the HSB code I have seen how to access to the “TpWorkerFactory” objects that are created once a timer is also created and figured how to potentially modify the callback address. A “TpWorkerFactory” object is created for each timer queue, diving into that object it is possible to reach a double linked list of structures where among the other things also the addresses of the callback are kept. Please refer to HSB code and also [this great resource](https://urien.gitbook.io/diago-lima/a-deep-dive-into-exploiting-windows-thread-pools/attacking-timer-queues) to learn more about the structures mentioned before, it does not really fit here 😄
 
 So the overall idea (at that point in time completely in my mind) was to have some “going to sleep” chain that would look like this: 
@@ -80,7 +77,6 @@ Having the opportunities to use these magic routines and objects, I have re-thou
 Got tired only thinking about but it should work.  
 
 ## The Code
-
 Before starting is important to mention that some of the code I used it’s been consulted and/or copied-pasta from the [HSB repository](https://github.com/thefLink/Hunt-Sleeping-Beacons) (for what concerns the TpWorkerFactory enumeration) and from the awesome outstanding code base available in  [Maldev Academy](https://maldevacademy.com/) (for what concerns the APCs operations and Foliage explaination) in order to achieve my ideas. But let’s cut to the chase now. 
 
 The new version of Sleaping welcomes a new suspended thread (to execute the point 6) 
@@ -461,7 +457,6 @@ int SleapingAPC(PTPP_CLEANUP_GROUP_MEMBER* callbackinfo, PHANDLE EvntHide, PHAND
 And that’s about it, just waiting for the bomb to stop ticking 😄
 
 ## The Result
-
 Finally the screenshots paragraph: 
 
 {{< rawhtml >}}
@@ -479,7 +474,6 @@ SLEAPING and SWAPPALA also resisting to some other scanners:
 {{< /rawhtml >}}
 
 ## But Wait You Said
-
 Yes, I did mention before that HSB was actually alerting “a thing or two” when it comes to SLEAPING and SWAPPALA. 
 
 {{< rawhtml >}}
@@ -592,7 +586,6 @@ As mentioned in the comment, I have fixed that by creating a new thread in the a
 It’s important to mention that other sleeping masks achieve this spoofing the stack of the main thread at sleep time, however that it’s not necessary in the case of SWAPPALA. 
 
 ## Conclusions and Credits
-
 It was fun as always, maybe bit overengineered but efficient, I will keep working on this to find a way to improve. I will also take some time before merging this branch but feel free to reach out in case you have questions or doubts. 
 
 I have mentioned this quite extensively already, but big shout out and thanks to authors of code from: 
